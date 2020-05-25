@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args, db) => {
         db.collection('guild-members').doc(message.guild.id).update({
             'members': members
         }).then(() => {
-            message.react("✅");
+            message.channel.reply('You\'re now an active member of the server!');
         });
     });
 }
