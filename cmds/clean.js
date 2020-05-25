@@ -27,6 +27,8 @@ module.exports.run = async (bot, message, args, db) => {
     }).then(() => {
         members = members.filter(m => !ids.includes(m.id));
         let msg = '';
+        let removedCount = members.length;
+        let removedMsg = removedCount + ' members were removed from the server.\n\nRemoved members are as follows:\n\n';    
         if (members.length != 0) {
             members.forEach(m => {
                 msg = 'Greetings <@' + m.id + '>, I am sending you this message regarding TeamZtone\'s Discord server.\n\n' +
@@ -34,6 +36,7 @@ module.exports.run = async (bot, message, args, db) => {
                     'Because you did not opt in as an active member when you joined you will now be removed from the server.\n\n' +
                     'Please note that if you believe this happened by mistake and you wish to rejoin, kindly send a message to <@446624196563566594>\n\n' +
                     'We wish you all the best!';
+                removedMsg += m.username + '\n';
                 bot.users.fetch(m.id).then(user => {
                     user.send(msg).then(() => {
                         message.guild.members.cache.get(m.id).kick();
@@ -41,6 +44,7 @@ module.exports.run = async (bot, message, args, db) => {
                 });
             })
         }
+        message.channel.send(removedMsg);
     }).catch(e => {
         message.channel.send('Jack is missing permissions!');
         console.log(e);
