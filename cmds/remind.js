@@ -1,5 +1,16 @@
 module.exports.run = async (bot, message, args, db) => {
 
+    // role check
+    const accessRoles = ['Scrim Manager'];
+    let canAccess = false;
+    if (message.member.roles.cache.some(r=>accessRoles.includes(r.name))){
+        canAccess = true;
+    }
+    if(!canAccess){
+        message.reply("you can't use this command!");
+        return;
+    }
+
     let guildMembers = message.guild.members.cache.filter(m => !m.user.bot).array();
     let members = [];
     guildMembers.forEach(m => {
