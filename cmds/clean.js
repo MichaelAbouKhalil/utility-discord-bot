@@ -35,7 +35,7 @@ module.exports.run = async (bot, message, args, db) => {
                     msg = 'Hi <@' + m.id + '>, I\'m messaging you about TeamZtone\'s Discord server which you were apart of.\n\n' +
                         'Time to time we do a server clean-up and in doing so we remove inactive members.\n\n' +
                         'Because you did not opt in as an active member when you joined you\'ve now been removed from the server.\n\n' +
-                        'Please note that if you believe this happened by mistake and you wish to rejoin, please use the link below:\n\n' +
+                        'If you believe this happened by mistake and wish to rejoin, please use the following link:\n\n' +
                         'https://discord.gg/PRS2dxR \n\n' +
                         'Don\'t forget to opt in as an active member by typing ^active\n\n' +
                         'We wish you all the best!';
