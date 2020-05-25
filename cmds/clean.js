@@ -44,9 +44,10 @@ module.exports.run = async (bot, message, args, db) => {
                         message.guild.members.cache.get(m.id).kick();
                     });
                 });
+            }).then(() => {
+                message.channel.send(removedMsg);
             })
         }
-        message.channel.send(removedMsg);
     }).catch(e => {
         message.channel.send('Jack is missing permissions!');
         console.log(e);
