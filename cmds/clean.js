@@ -36,7 +36,7 @@ module.exports.run = async (bot, message, args, db) => {
                     'Because you did not opt in as an active member when you joined you\'ve now been removed from the server.\n\n' +
                     'Please note that if you believe this happened by mistake and you wish to rejoin, please use the link below:\n\n' +
                     'https://discord.gg/PRS2dxR \n\n' +
-                    'Don\'t forget to opt in as an active member by typing ^active'
+                    'Don\'t forget to opt in as an active member by typing ^active' +
                     'We wish you all the best!';
                 removedMsg += m.username + '\n';
                 bot.users.fetch(m.id).then(user => {
