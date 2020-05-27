@@ -38,9 +38,6 @@ module.exports.run = async (bot, message, args, db, prefix) => {
             msg = 'Everyone has opted in as an active member.';
         }
         message.channel.send(msg);
-        if (members.length != 0) {
-            message.channel.send('$remind <@658815505586716692> 1m run cleanu.');
-        }
 
     });
 }
