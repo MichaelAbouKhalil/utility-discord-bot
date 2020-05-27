@@ -51,8 +51,8 @@ bot.on('message', message => {
     if (message.author.bot) return;
     // if dm ignore
     if (message.channel.type === 'dm') return;
-    // restrict channel: --test -- general
-    let accessChannels = ['710381919770247168', '709725120381452289'];
+    // restrict channel: --test -- general -- cleanup
+    let accessChannels = ['710381919770247168', '709725120381452289', '715154804791312446'];
     if (!accessChannels.includes(message.channel.id)) return;
 
     db.collection('guilds').doc(message.guild.id).get().then((q) => {
@@ -69,7 +69,7 @@ bot.on('message', message => {
         if (bot.commands.get(command.slice(prefix.length))) {
             let cmd = bot.commands.get(command.slice(prefix.length));
             if (cmd) {
-                cmd.run(bot, message, args, db);
+                cmd.run(bot, message, args, db, prefix);
             }
         }
     })

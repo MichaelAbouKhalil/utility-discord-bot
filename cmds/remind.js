@@ -1,12 +1,12 @@
-module.exports.run = async (bot, message, args, db) => {
+module.exports.run = async (bot, message, args, db, prefix) => {
 
     // role check
-    const accessRoles = ['Scrim Manager'];
+    const accessRoles = ['RoleA', 'Vice Master', 'Clan Master'];
     let canAccess = false;
-    if (message.member.roles.cache.some(r=>accessRoles.includes(r.name))){
+    if (message.member.roles.cache.some(r => accessRoles.includes(r.name))) {
         canAccess = true;
     }
-    if(!canAccess){
+    if (!canAccess) {
         message.reply("you can't use this command!");
         return;
     }
@@ -19,6 +19,7 @@ module.exports.run = async (bot, message, args, db) => {
 
     let activeMembers;
     let ids = [];
+
     db.collection('guild-members').doc(message.guild.id).get().then((q) => {
         if (q.exists) {
             activeMembers = q.data().members;
@@ -29,16 +30,18 @@ module.exports.run = async (bot, message, args, db) => {
         let msg = '';
         if (members.length != 0) {
             members.forEach(m => {
-                msg += '<@' + m.id + '> ';
+                msg += '<@' + m.id + '>\n';
             })
-            msg += 'Please don\'t forget to opt in as an active user in this server if you don\'t want to be removed.'
+            msg += '\nPlease don\'t forget to opt in as an active user in this server (by typing ' + prefix + 'active) if you don\'t' +
+                ' want to be removed during the  upcoming clean-up.';
         } else {
-            msg = 'Everyone has been verified';
+            msg = 'Everyone has opted in as an active member.';
         }
         message.channel.send(msg);
-        // bot.users.fetch('331200747318542336').then(user => {
-        //     user.send('hi' + user.username);
-        // })
+        if (members.length != 0) {
+            message.channel.send('$remind <@658815505586716692> 1m run cleanu.');
+        }
+
     });
 }
 

@@ -1,7 +1,7 @@
 module.exports.run = async (bot, message, args, db) => {
 
     // role check
-    const accessRoles = ['Scrim Manager'];
+    const accessRoles = ['RoleA', 'Vice Master', 'Clan Master'];
     let canAccess = false;
     if (message.member.roles.cache.some(r => accessRoles.includes(r.name))) {
         canAccess = true;
@@ -19,6 +19,7 @@ module.exports.run = async (bot, message, args, db) => {
 
     let activeMembers;
     let ids = [];
+    let removedMsg = '';
     db.collection('guild-members').doc(message.guild.id).get().then((q) => {
         if (q.exists) {
             activeMembers = q.data().members;
@@ -28,8 +29,9 @@ module.exports.run = async (bot, message, args, db) => {
         members = members.filter(m => !ids.includes(m.id));
         let msg = '';
         let removedCount = members.length;
-        let removedMsg = removedCount + ' member/s were removed from the server.\n\nRemoved member/s are as follows:\n\n';
+        removedMsg = removedCount + ' member/s were removed from the server.';
         if (members.length != 0) {
+            removedMsg += '\n\nRemoved member/s are as follows:\n\n';
             members.forEach(m => {
                 bot.users.fetch(m.id).then(user => {
                     msg = 'Hi <@' + m.id + '>, I\'m messaging you about TeamZtone\'s Discord server which you were apart of.\n\n' +
@@ -44,12 +46,14 @@ module.exports.run = async (bot, message, args, db) => {
                         message.guild.members.cache.get(m.id).kick();
                     });
                 });
-            }).then(() => {
-                message.channel.send(removedMsg);
             })
         }
-    }).catch(e => {
-        message.channel.send('Jack is missing permissions!');
+    })
+    .then(() => {
+        message.channel.send(removedMsg);
+    })
+    .catch(e => {
+        message.channel.send('Bot is missing permissions!');
         console.log(e);
     });
 }
