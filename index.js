@@ -98,4 +98,10 @@ bot.on('guildCreate', async gData => {
     });
 });
 
+bot.on("guildMemberUpdate", (oldMember, newMember) => {
+    let cmd = bot.commands.get('updateRoster');
+    cmd.run(bot, oldMember, newMember);
+});
+
+
 bot.login(token);

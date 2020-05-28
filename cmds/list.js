@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args, db, prefix) => {
         }
     }).then(() => {
         members = members.filter(m => !ids.includes(m.id));
-        let msg = 'Players that has not opt in yet:\n\n';
+        let msg = 'The following players haven\'t opted in as an active member:\n\n';
         if (members.length != 0) {
             members.forEach(m => {
                 msg += m.username + '\n';
