@@ -24,7 +24,8 @@ admin.initializeApp({
 let db = admin.firestore();
 
 bot.on('ready', () => {
-    console.log('CallMeJack is online!');
+    bot.user.setActivity('^help', { type: 'PLAYING' });
+    console.log(bot.user.username + ' is online!');
 });
 
 fs.readdir('./cmds', (err, files) => {
