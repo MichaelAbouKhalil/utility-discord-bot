@@ -4,9 +4,26 @@ module.exports.run = async (bot, oldMember, newMember) => {
     // let channelId = '715481631611289631';
     // TZT server roster
     let channelId = '649663863800856591';
-    let displayRoles = ['Clan Master', 'Vice Master', 'Scrim Manager', 'Admin', 'Mod', 'Clan Member'];
+    let displayRoles = ['Clan Master', 'Vice Master', 'Scrim Manager', 'Admin', 'Mod', //
+    'Team A (Asia)', 'Team A (Europe)', 'Clan Member'];
 
-    // if(oldMember)
+    let oldRoles = [];
+    oldMember.roles.cache.forEach(r => {
+        oldRoles.push(r.name);
+    });
+    let newRoles = [];
+    newMember.roles.cache.forEach(r => {
+        newRoles.push(r.name);
+    });
+
+    newTempRoles = newRoles.filter(r => !oldRoles.includes(r));
+    newTempRoles = newTempRoles.filter(r => displayRoles.includes(r));
+    oldTempRoles = oldRoles.filter(r => !newRoles.includes(r));
+    oldTempRoles = oldTempRoles.filter(r => displayRoles.includes(r));
+
+    if(newTempRoles.length == 0 && oldTempRoles.length == 0){
+        return;
+    }
 
     let members = newMember.guild.members.cache.filter(m => !m.user.bot);
     let serverRoles = newMember.guild.roles.cache.filter(r => displayRoles.includes(r.name));
@@ -45,8 +62,8 @@ module.exports.run = async (bot, oldMember, newMember) => {
         });
     });
     let channel = newMember.guild.channels.cache.get(channelId);
-    // channel.bulkDelete(100);
-    // channel.send(roster);
+    channel.bulkDelete(100);
+    channel.send(roster);
 }
 
 module.exports.help = {
