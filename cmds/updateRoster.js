@@ -6,6 +6,8 @@ module.exports.run = async (bot, oldMember, newMember) => {
     let channelId = '649663863800856591';
     let displayRoles = ['Clan Master', 'Vice Master', 'Scrim Manager', 'Admin', 'Mod', 'Clan Member'];
 
+    // if(oldMember)
+
     let members = newMember.guild.members.cache.filter(m => !m.user.bot);
     let serverRoles = newMember.guild.roles.cache.filter(r => displayRoles.includes(r.name));
     let roles = [];
@@ -43,8 +45,8 @@ module.exports.run = async (bot, oldMember, newMember) => {
         });
     });
     let channel = newMember.guild.channels.cache.get(channelId);
-    channel.bulkDelete(100);
-    channel.send(roster);
+    // channel.bulkDelete(100);
+    // channel.send(roster);
 }
 
 module.exports.help = {
