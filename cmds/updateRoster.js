@@ -34,7 +34,8 @@ module.exports.run = async (bot, oldMember, newMember) => {
         roleMember.forEach(m => {
             members.push({
                 id: m.user.id,
-                name: m.user.username
+                name: m.user.username,
+                displayName: m.displayName
             });
         });
         let obj = {
@@ -56,7 +57,7 @@ module.exports.run = async (bot, oldMember, newMember) => {
                 }
                 roster += '\n\n__**' + name+'**__\n';
                 r.members.forEach(m => {
-                    roster += '\n<@'+m.id+'>';
+                    roster += '\n'+m.displayName;
                 });
             }
         });
