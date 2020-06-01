@@ -5,7 +5,7 @@ module.exports.run = async (bot, oldMember, newMember) => {
     // TZT server roster
     let channelId = '649663863800856591';
     let displayRoles = ['Clan Master', 'Vice Master', 'Scrim Manager', 'Admin', 'Mod', //
-    'Team A (Asia)', 'Team A (Europe)', 'Clan Member'];
+    'Recruitment Manager', 'Application Manager', 'Team A (Asia)', 'Team A (Europe)', 'Clan Member'];
 
     let oldRoles = [];
     oldMember.roles.cache.forEach(r => {
