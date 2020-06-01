@@ -5,7 +5,7 @@ module.exports.run = async (bot, oldMember, newMember) => {
     // TZT server roster
     let channelId = '649663863800856591';
     let displayRoles = ['Clan Master', 'Vice Master', 'Scrim Manager', 'Admin', 'Mod', //
-    'Recruitment Manager', 'Application Manager', 'Team A (Asia)', 'Team A (Europe)', 'Clan Member'];
+        'Recruitment Manager', 'Application Manager', 'Team A (Asia)', 'Team A (Europe)', 'Clan Member'];
 
     let oldRoles = [];
     oldMember.roles.cache.forEach(r => {
@@ -21,7 +21,7 @@ module.exports.run = async (bot, oldMember, newMember) => {
     oldTempRoles = oldRoles.filter(r => !newRoles.includes(r));
     oldTempRoles = oldTempRoles.filter(r => displayRoles.includes(r));
 
-    if(newTempRoles.length == 0 && oldTempRoles.length == 0){
+    if (newTempRoles.length == 0 && oldTempRoles.length == 0) {
         return;
     }
 
@@ -48,16 +48,21 @@ module.exports.run = async (bot, oldMember, newMember) => {
     let roster = '';
     displayRoles.forEach(role => {
         roles.forEach(r => {
-            if(role === r.name){
+            if (role === r.name) {
                 let name = '';
-                if(r.name === 'Clan Member'){
+                if (r.name === 'Clan Member') {
                     name = r.name + ' (total ' + r.members.length + ')'
-                }else{
+                } else {
                     name = r.name;
                 }
-                roster += '\n\n__**' + name+'**__\n';
-                r.members.forEach(m => {
-                    roster += '\n'+m.displayName;
+                roster += '\n\n__**' + name + '**__\n';
+                roleMembers = r.members.sort((a, b) => {
+                    if (a.displayName < b.displayName) { return -1; }
+                    if (a.displayName > b.displayName) { return 1; }
+                    return 0;
+                })
+                roleMembers.forEach(m => {
+                    roster += '\n' + m.displayName;
                 });
             }
         });
