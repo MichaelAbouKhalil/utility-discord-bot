@@ -57,8 +57,8 @@ module.exports.run = async (bot, oldMember, newMember) => {
                 }
                 roster += '\n\n__**' + name + '**__\n';
                 roleMembers = r.members.sort((a, b) => {
-                    if (a.displayName < b.displayName) { return -1; }
-                    if (a.displayName > b.displayName) { return 1; }
+                    if (a.displayName.toLowerCase() < b.displayName.toLowerCase()) { return -1; }
+                    if (a.displayName.toLowerCase() > b.displayName.toLowerCase()) { return 1; }
                     return 0;
                 })
                 roleMembers.forEach(m => {
