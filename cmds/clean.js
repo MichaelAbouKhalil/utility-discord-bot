@@ -20,6 +20,7 @@ module.exports.run = async (bot, message, args, db) => {
     let activeMembers;
     let ids = [];
     let removedMsg = '';
+    let msgArr = [];
     db.collection('guild-members').doc(message.guild.id).get().then((q) => {
         if (q.exists) {
             activeMembers = q.data().members;
@@ -42,6 +43,10 @@ module.exports.run = async (bot, message, args, db) => {
                         'Don\'t forget to opt in as an active member by typing ^active in the attendance channel.\n\n' +
                         'We wish you all the best!';
                     removedMsg += m.username + '\n';
+                    if (removedMsg.length >= 1500) {
+                        msgArr.push(removedMsg);
+                        removedMsg = '';
+                    }
                     user.send(msg).then(() => {
                         message.guild.members.cache.get(m.id).kick();
                     });
@@ -49,13 +54,17 @@ module.exports.run = async (bot, message, args, db) => {
             })
         }
     })
-    .then(() => {
-        message.channel.send(removedMsg);
-    })
-    .catch(e => {
-        message.channel.send('Bot is missing permissions!');
-        console.log(e);
-    });
+        .then(() => {
+            if (msgArr.length > 0) {
+                msgArr.forEach(mm => {
+                    message.channel.send(mm);
+                });
+            }
+        })
+        .catch(e => {
+            message.channel.send('Bot is missing permissions!');
+            console.log(e);
+        });
 }
 
 module.exports.help = {
