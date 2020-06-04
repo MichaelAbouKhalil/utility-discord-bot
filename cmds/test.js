@@ -18,15 +18,15 @@ module.exports.run = (bot, message, args, db, prefix, moment) => {
             let countdown = setInterval(() => {
                 if (sent.reactions.cache.keyArray().includes('❌')) {
                     sent.edit(title + 'Countdown Stopped!');
-                    clearInterval(countdown);
                     sent.unpin();
+                    clearInterval(countdown);
                     return;
                 }
                 now = moment.utc();
                 if (now.isSame(date) || now.isAfter(date)) {
                     sent.edit( title + 'Countdown Finished!');
-                    clearInterval(countdown);
                     sent.unpin();
+                    clearInterval(countdown);
                     return;
                 }
                 let diff = title + moment.preciseDiff(date, now);
