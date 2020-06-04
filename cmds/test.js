@@ -1,46 +1,28 @@
 module.exports.run = (bot, message, args, db, prefix, moment) => {
 
+    let title = args[1]+ ':\n';
     let date = moment.utc(args[0]);
     let now = moment.utc();
-    message.channel.send(date.toString());
-    message.channel.send(now.toString());
-    // let timeDiff = date - now;
-    // let duration = moment.duration(date.diff(now));
-    // let dDays = duration.days();
-    // let dHours = duration.hours();
-    // let dMinutes = duration.minutes();
-    // let dSeconds = duration.seconds();
-    message.channel.send('Countdown: \n')
+    if (now.isSame(date) || now.isAfter(date)) {
+        message.channel.send('Counter Finished!');
+        return;
+    }
+
+    message.channel.send(title + moment.preciseDiff(date, now))
         .then(sent => {
             let countdown = setInterval(() => {
-                if(sent.reactions.cache.keyArray().includes('❌')){
+                if (sent.reactions.cache.keyArray().includes('❌')) {
                     return;
                 }
                 now = moment.utc();
-                if(now.isSame(date) || now.isAfter(date)){
-                    sent.edit('Counter Finished!');
+                if (now.isSame(date) || now.isAfter(date)) {
+                    sent.edit( title + 'Counter Finished!');
                     clearInterval(countdown);
                     return;
                 }
-                let diff = moment.preciseDiff(date, now);
+                let diff = title + moment.preciseDiff(date, now);
                 sent.edit(diff);
-
-                // now = moment.utc();
-                // timeDiff = date - now;
-                // duration = moment.duration(date.diff(now));
-                // dDays = duration.days();
-                // dHours = duration.hours();
-                // dMinutes = duration.minutes();
-                // dSeconds = duration.seconds();
-
-                // if(duration.asSeconds() <0 ){
-                //     sent.edit('FINISHED');
-                //     return;
-                // }
-
-                // let msg = 'Countdown:\n' + dDays + 'D ' + dHours + 'H:' + dMinutes + 'M:' + dSeconds + 'S remaining';
-                // sent.edit(msg);
-            }, 3 * 1000);
+            }, 2 * 1000);
         });
 }
 
