@@ -40,7 +40,7 @@ module.exports.run = (bot, message, args, db, prefix, moment) => {
 
                 // let msg = 'Countdown:\n' + dDays + 'D ' + dHours + 'H:' + dMinutes + 'M:' + dSeconds + 'S remaining';
                 // sent.edit(msg);
-            }, 1 * 1000);
+            }, 10 * 1000);
         });
 }
 
