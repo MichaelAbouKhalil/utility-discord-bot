@@ -16,6 +16,8 @@ module.exports.run = (bot, message, args, db, prefix, moment) => {
         .then(sent => {
             let countdown = setInterval(() => {
                 if (sent.reactions.cache.keyArray().includes('❌')) {
+                    sent.edit(title + 'Countdown Stopped!');
+                    clearInterval(countdown);
                     return;
                 }
                 now = moment.utc();
