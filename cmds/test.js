@@ -1,10 +1,14 @@
 module.exports.run = (bot, message, args, db, prefix, moment) => {
 
-    let title = args[1]+ ':\n';
+    let title = '';
+    for(let i =1 ;i < args.length; i++){
+        title += args[i] + ' ';
+    }
+    title += ':\n';
     let date = moment.utc(args[0]);
     let now = moment.utc();
     if (now.isSame(date) || now.isAfter(date)) {
-        message.channel.send('Counter Finished!');
+        message.channel.send('Countdown Finished!');
         return;
     }
 
@@ -16,13 +20,13 @@ module.exports.run = (bot, message, args, db, prefix, moment) => {
                 }
                 now = moment.utc();
                 if (now.isSame(date) || now.isAfter(date)) {
-                    sent.edit( title + 'Counter Finished!');
+                    sent.edit( title + 'Countdown Finished!');
                     clearInterval(countdown);
                     return;
                 }
                 let diff = title + moment.preciseDiff(date, now);
                 sent.edit(diff);
-            }, 2 * 1000);
+            }, 3 * 1000);
         });
 }
 
