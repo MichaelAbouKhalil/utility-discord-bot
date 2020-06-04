@@ -14,16 +14,19 @@ module.exports.run = (bot, message, args, db, prefix, moment) => {
 
     message.channel.send(title + moment.preciseDiff(date, now))
         .then(sent => {
+            sent.pin();
             let countdown = setInterval(() => {
                 if (sent.reactions.cache.keyArray().includes('❌')) {
                     sent.edit(title + 'Countdown Stopped!');
                     clearInterval(countdown);
+                    sent.unpin();
                     return;
                 }
                 now = moment.utc();
                 if (now.isSame(date) || now.isAfter(date)) {
                     sent.edit( title + 'Countdown Finished!');
                     clearInterval(countdown);
+                    sent.unpin();
                     return;
                 }
                 let diff = title + moment.preciseDiff(date, now);
