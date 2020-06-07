@@ -1,8 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const moment = require('moment');
 require('dotenv/config');
-require('moment-precise-range-plugin');
 
 // import settings
 const owner = process.env.OWNER;
@@ -72,7 +70,7 @@ bot.on('message', message => {
         if (bot.commands.get(command.slice(prefix.length))) {
             let cmd = bot.commands.get(command.slice(prefix.length));
             if (cmd) {
-                cmd.run(bot, message, args, db, prefix, moment);
+                cmd.run(bot, message, args, db, prefix);
             }
         }
     })
