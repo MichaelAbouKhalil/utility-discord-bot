@@ -1,10 +1,11 @@
 module.exports.run = (bot, message, args, db, prefix) => {
 
     // id of channel: clan-application-results
-    let channelId = '719154685595877387';
+    let channelId = '672990677683929148';
 
     // role check
-    const accessRoles = ['Vice Master', 'Clan Master'];
+    const accessRoles = ['Admin', 'Clan Master', 'Vice Master', 'Mod', 'Application Manager',
+        'Recruitment Manager'];
     let canAccess = false;
     if (message.member.roles.cache.some(r => accessRoles.includes(r.name))) {
         canAccess = true;

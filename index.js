@@ -53,7 +53,7 @@ bot.on('message', message => {
     // if dm ignore
     if (message.channel.type === 'dm') return;
     // restrict channel: --test -- general -- cleanup
-    let accessChannels = ['710381919770247168', '709725120381452289', '715154804791312446'];
+    let accessChannels = ['710381919770247168', '709725120381452289', '715154804791312446', '672990677683929148'];
     if (!accessChannels.includes(message.channel.id)) return;
 
     db.collection('guilds').doc(message.guild.id).get().then((q) => {
