@@ -17,11 +17,17 @@ module.exports.run = (bot, message, args, db, prefix) => {
 
     // message should be received as 'application accept @..' or 'application reject @...'
     let isAccept = false;
+    let autoAccept = false;
     if (args.length >= 1) {
         if (args[0].toLowerCase() === 'accept') {
             isAccept = true;
+            autoAccept = false;
         } else if (args[0].toLowerCase() === 'reject') {
             isAccept = false;
+            autoAccept = false;
+        } else if(args[0].toLowerCase() === 'auto') {
+            isAccept = true;
+            autoAccept = true;
         } else {
             message.reply('Please Specify decision!');
             return;
@@ -58,7 +64,13 @@ module.exports.run = (bot, message, args, db, prefix) => {
                 });
                 msg += '\n\n';
 
-                msg += isAccept ? messages.accept : messages.reject;
+                if(!isAccept){
+                    msg += messages.reject;
+                }else if(isAccept && !autoAccept){
+                    msg += messages.accept;
+                }else if(isAccept && autoAccept){
+                    msg += messages.auto;
+                }
 
                 let channel = message.guild.channels.cache.get(channelId);
                 channel.send(msg).then(() => {
