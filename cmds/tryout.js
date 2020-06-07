@@ -68,7 +68,9 @@ module.exports.run = (bot, message, args, db, prefix) => {
                 msg = msg.replace(/\\n/g, '\n');
 
                 let channel = message.guild.channels.cache.get(channelId);
-                channel.send(msg);
+                channel.send(msg).then(() => {
+                    message.delete({timeout: 100});
+                });
             }
         });
 }

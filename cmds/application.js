@@ -61,7 +61,9 @@ module.exports.run = (bot, message, args, db, prefix) => {
                 msg += isAccept ? messages.accept : messages.reject;
 
                 let channel = message.guild.channels.cache.get(channelId);
-                channel.send(msg);
+                channel.send(msg).then(() => {
+                    message.delete({timeout: 100});
+                });
             }
         });
 }
