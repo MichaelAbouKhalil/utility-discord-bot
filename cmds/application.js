@@ -25,7 +25,7 @@ module.exports.run = (bot, message, args, db, prefix) => {
         } else if (args[0].toLowerCase() === 'reject') {
             isAccept = false;
             autoAccept = false;
-        } else if(args[0].toLowerCase() === 'auto') {
+        } else if (args[0].toLowerCase() === 'auto') {
             isAccept = true;
             autoAccept = true;
         } else {
@@ -36,6 +36,9 @@ module.exports.run = (bot, message, args, db, prefix) => {
         message.reply('Missing arguments!');
         return;
     }
+
+    // give this role in case of accept
+    let tryoutRole = message.guild.roles.cache.find(role => role.name === "Tryout Member");
 
     // get mentions from message
     let mentions = [];
@@ -64,18 +67,26 @@ module.exports.run = (bot, message, args, db, prefix) => {
                 });
                 msg += '\n\n';
 
-                if(!isAccept){
+                if (!isAccept) {
                     msg += messages.reject;
-                }else if(isAccept && !autoAccept){
+                } else if (isAccept && !autoAccept) {
                     msg += messages.accept;
-                }else if(isAccept && autoAccept){
+                } else if (isAccept && autoAccept) {
                     msg += messages.auto;
                 }
                 msg = msg.replace(/\\n/g, '\n');
-                
+
                 let channel = message.guild.channels.cache.get(channelId);
                 channel.send(msg).then(() => {
-                    message.delete({timeout: 100});
+                    message.delete({ timeout: 100 });
+
+                    if (isAccept && !autoAccept) {
+                        mentions.forEach(m => {
+                            message.guild.members.fetch(m.id).then(memb => {
+                                memb.roles.add(tryoutRole);
+                            });
+                        });
+                    }
                 });
             }
         });

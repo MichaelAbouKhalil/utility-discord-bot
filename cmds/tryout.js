@@ -53,6 +53,9 @@ module.exports.run = (bot, message, args, db, prefix) => {
         return;
     }
 
+    // remove this role in case of accept or reject
+    let tryoutRole = message.guild.roles.cache.find(role => role.name === "Tryout Member");
+
     db.collection('messages').doc('Tryout').get()
         .then(q => {
             if (q.exists) {
@@ -69,7 +72,12 @@ module.exports.run = (bot, message, args, db, prefix) => {
 
                 let channel = message.guild.channels.cache.get(channelId);
                 channel.send(msg).then(() => {
-                    message.delete({timeout: 100});
+                    message.delete({ timeout: 100 });
+                    mentions.forEach(m => {
+                        message.guild.members.fetch(m.id).then(memb => {
+                            memb.roles.remove(tryoutRole);
+                        });
+                    });
                 });
             }
         });
