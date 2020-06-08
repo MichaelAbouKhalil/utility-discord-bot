@@ -68,8 +68,8 @@ module.exports.run = async (bot, oldMember, newMember) => {
         });
     });
     let channel = newMember.guild.channels.cache.get(channelId);
-    //channel.bulkDelete(100);
-    //channel.send(roster);
+    channel.bulkDelete(100);
+    channel.send(roster);
 }
 
 module.exports.help = {
