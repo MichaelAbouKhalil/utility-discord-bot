@@ -53,17 +53,25 @@ bot.on('message', message => {
     // if dm ignore
     if (message.channel.type === 'dm') return;
     // restrict channel: --test -- general -- cleanup
-    let accessChannels = ['710381919770247168', '709725120381452289', '715154804791312446', '672990677683929148'];
+    let accessChannels = ['710381919770247168', '709725120381452289', '715154804791312446',
+        '672990677683929148', '630733683510214667'];
     if (!accessChannels.includes(message.channel.id)) return;
 
+    let ios = false;
     db.collection('guilds').doc(message.guild.id).get().then((q) => {
         if (q.exists) {
             prefix = q.data().prefix;
+            ios = q.data().ios;
         }
     }).then(() => {
         let msg_array = message.content.split(" ");
         let command = msg_array[0];
         let args = msg_array.slice(1);
+
+        if(message.channel.id === '630733683510214667' && ios){
+            message.channel.send('IOS God, Android gay');
+            return;
+        }
 
         if (!command.startsWith(prefix)) return;
 
