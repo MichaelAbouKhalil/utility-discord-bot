@@ -69,7 +69,7 @@ bot.on('message', message => {
         let args = msg_array.slice(1);
 
         if(message.channel.id === '630733683510214667' && ios){
-            message.channel.send('IOS God, Android gay');
+            message.channel.send('IOS Good, Android Gay');
             return;
         }
 
