@@ -69,6 +69,7 @@ module.exports.run = (bot, message, args, db, prefix) => {
 
                 msg += isAccept ? messages.accept : messages.reject;
                 msg = msg.replace(/\\n/g, '\n');
+                msg += "\n______________________________________________________________________________";
 
                 let channel = message.guild.channels.cache.get(channelId);
                 channel.send(msg).then(() => {
